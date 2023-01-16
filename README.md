@@ -1,2 +1,3 @@
-# vscode-indentWhiteSpace
-Visual Studio Code extension that enlarges the rendering of indentation spaces
+# Indent White Space
+
+Enlarge the rendering of indentation spaces.

@@ -1,0 +1,35 @@
+{
+  "name": "vscode-indentWhitespace",
+  "displayName": "Indent Whitespace",
+  "description": "Enlarge the rendering of indentation spaces",
+  "version": "0.1.0",
+  "publisher": "rioj7",
+  "engines": { "vscode": "^1.62.0" },
+  "categories": ["Other"],
+  "keywords": ["whitespace","space","indent"],
+  "activationEvents": ["*"],
+  "license": "MIT",
+  "main": "./indentWhiteSpace",
+  "browser": "./indentWhiteSpace",
+  "icon": "assets/icon.png",
+  "contributes": {
+    "configuration": {
+      "title": "Indent Whitespace",
+      "properties": {
+        "indentWhitespace.space.enlargement": {
+          "type": "integer",
+          "default": 1,
+          "description": "Make every indent space larger"
+        }
+      }
+    }
+  },
+  "repository": {
+    "url": "https://github.com/rioj7/vscode-indentWhiteSpace.git",
+    "type": "git"
+  },
+  "bugs": {
+    "url": "https://github.com/rioj7/vscode-indentWhiteSpace/issues"
+  },
+  "homepage": "https://github.com/rioj7/vscode-indentWhiteSpace"
+}
