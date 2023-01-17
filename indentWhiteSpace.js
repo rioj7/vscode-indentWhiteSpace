@@ -5,7 +5,7 @@ const extensionShortName = 'indentWhitespace';
 function activate(context) {
   const whiteSpace = new WhiteSpace();
   vscode.workspace.onDidChangeConfiguration( configevent => {
-    if (configevent.affectsConfiguration(extensionShortName)) { whiteSpace.updateConfigurations(); }
+    if (configevent.affectsConfiguration(extensionShortName)  || configevent.affectsConfiguration('workbench')) { whiteSpace.updateConfigurations(); }
   }, null, context.subscriptions);
   vscode.window.onDidChangeTextEditorSelection( changeEvent => { whiteSpace.updateEditor(changeEvent.textEditor); }, null, context.subscriptions);
 }
@@ -23,10 +23,21 @@ class WhiteSpace {
     const enlargementCount = configurations.get("space.enlargement");
     this.spaceDecoration = undefined;
     if (enlargementCount > 0) {
+      const positionSpaceDecorator = configurations.get("space.positionDecorator");
+      let workbenchConfig = vscode.workspace.getConfiguration("workbench");
+      let themeName = workbenchConfig.get("colorTheme");
+
       let enlargement = "";
       for (let i = 0; i < enlargementCount; ++i) { enlargement += " "; }
-  
-      this.spaceDecoration = vscode.window.createTextEditorDecorationType({after: { contentText: enlargement, backgroundColor:'#f0000010'}});
+
+      let decorator = { };
+      if (themeName.indexOf('Contrast') >= 0) {
+        decorator[positionSpaceDecorator] = { contentText: enlargement, textDecoration: "none; border: 4px double currentcolor; border-style: none none double none;", color:new vscode.ThemeColor("indentWhitespace.space.enlargement") };
+      } else {
+        decorator[positionSpaceDecorator] = { contentText: enlargement, backgroundColor:new vscode.ThemeColor("indentWhitespace.space.enlargement")};
+      }
+
+      this.spaceDecoration = vscode.window.createTextEditorDecorationType(decorator);
     }
     this.updateDecorations();
   }
